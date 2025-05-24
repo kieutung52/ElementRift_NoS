@@ -38,7 +38,7 @@ Victory can be achieved either by defeating the opponent or collecting enough ke
 
 ## ⚙️ Technologies Used
 
-| Component                  | Technology            |
+| Component                 | Technology             |
 |---------------------------|------------------------|
 | Game Engine               | Unity 3D               |
 | Programming Language      | C#                     |
