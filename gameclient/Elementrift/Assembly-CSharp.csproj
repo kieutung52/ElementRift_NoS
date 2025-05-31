@@ -64,12 +64,53 @@
     <Analyzer Include="/home/kieutung/Unity/Hub/Editor/2022.3.62f1/Editor/Data/Tools/Unity.SourceGenerators/Unity.Properties.SourceGenerator.dll" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets/00_Script/Controller/Player/PlayerController.cs" />
-    <Compile Include="Assets/00_Script/Controller/Player/CameraController.cs" />
-    <Compile Include="Assets/00_Script/Controller/Player/PlayerState.cs" />
-    <Compile Include="Assets/00_Script/IsGetHit.cs" />
-    <Compile Include="Assets/00_Script/GameManager.cs" />
-    <Compile Include="Assets/00_Script/CONSTANT.cs" />
+    <Compile Include="Assets/00_Script/Systems/CONSTANT.cs" />
+    <Compile Include="Assets/00_Script/Character/Core/CameraController.cs" />
+    <Compile Include="Assets/00_Script/Character/Core/PlayerController.cs" />
+    <Compile Include="Assets/00_Script/Systems/ObjectPooling.cs" />
+    <Compile Include="Assets/00_Script/Character/StateManager/WalkState.cs" />
+    <Compile Include="Assets/00_Script/Character/DataPlayer/PlayerData.cs" />
+    <Compile Include="Assets/00_Script/Character/IGetHit.cs" />
+    <Compile Include="Assets/00_Script/Systems/UIManager.cs" />
+    <Compile Include="Assets/00_Script/Systems/GameProfile.cs" />
+    <Compile Include="Assets/00_Script/Enums/ElementType.cs" />
+    <Compile Include="Assets/00_Script/Character/StateManager/RunState.cs" />
+    <Compile Include="Assets/00_Script/Systems/GameManager.cs" />
+    <Compile Include="Assets/00_Script/Character/Core/CharacterStats.cs" />
+    <Compile Include="Assets/00_Script/Skills/Skill.cs" />
+    <Compile Include="Assets/00_Script/Enums/CharacterClass.cs" />
+    <Compile Include="Assets/00_Script/Skills/Effector/EffectorBase.cs" />
+    <Compile Include="Assets/00_Script/Character/StateManager/DeadState.cs" />
+    <Compile Include="Assets/05_AssetStore/DoubleL/Demo/DemoCameraController.cs" />
+    <Compile Include="Assets/00_Script/Character/StateManager/IPlayerState.cs" />
+    <Compile Include="Assets/00_Script/Character/StateManager/IdleState.cs" />
+    <Compile Include="Assets/00_Script/Skills/SkillBase.cs" />
+    <Compile Include="Assets/00_Script/Character/StateManager/JumpState.cs" />
+    <Compile Include="Assets/00_Script/Character/Core/Character.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Assets/06_UI/TextMesh Pro/Shaders/TMPro.cginc" />
+    <None Include="Assets/06_UI/TextMesh Pro/Shaders/TMP_SDF-Mobile Overlay.shader" />
+    <None Include="Assets/06_UI/TextMesh Pro/Shaders/TMP_Bitmap.shader" />
+    <None Include="Assets/06_UI/TextMesh Pro/Shaders/TMPro_Mobile.cginc" />
+    <None Include="Assets/06_UI/TextMesh Pro/Shaders/TMP_SDF SSD.shader" />
+    <None Include="Assets/06_UI/TextMesh Pro/Shaders/TMP_SDF-Surface-Mobile.shader" />
+    <None Include="Assets/06_UI/TextMesh Pro/Shaders/TMP_SDF-Surface.shader" />
+    <None Include="Assets/06_UI/TextMesh Pro/Sprites/EmojiOne Attribution.txt" />
+    <None Include="Assets/06_UI/TextMesh Pro/Shaders/TMP_Bitmap-Custom-Atlas.shader" />
+    <None Include="Assets/06_UI/TextMesh Pro/Shaders/TMP_SDF.shader" />
+    <None Include="Assets/06_UI/TextMesh Pro/Shaders/TMP_SDF-Mobile SSD.shader" />
+    <None Include="Assets/06_UI/TextMesh Pro/Resources/LineBreaking Leading Characters.txt" />
+    <None Include="Assets/06_UI/TextMesh Pro/Shaders/TMPro_Properties.cginc" />
+    <None Include="Assets/06_UI/TextMesh Pro/Shaders/TMPro_Surface.cginc" />
+    <None Include="Assets/06_UI/TextMesh Pro/Resources/LineBreaking Following Characters.txt" />
+    <None Include="Assets/06_UI/TextMesh Pro/Shaders/TMP_SDF-Mobile Masking.shader" />
+    <None Include="Assets/06_UI/TextMesh Pro/Shaders/TMP_SDF Overlay.shader" />
+    <None Include="Assets/06_UI/TextMesh Pro/Shaders/TMP_Bitmap-Mobile.shader" />
+    <None Include="Assets/06_UI/TextMesh Pro/Fonts/LiberationSans - OFL.txt" />
+    <None Include="Assets/06_UI/TextMesh Pro/Shaders/TMP_SDF-Mobile.shader" />
+    <None Include="Assets/05_AssetStore/Hovl Studio/Magic effects pack/Demo scene/Readme.txt" />
+    <None Include="Assets/06_UI/TextMesh Pro/Shaders/TMP_Sprite.shader" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

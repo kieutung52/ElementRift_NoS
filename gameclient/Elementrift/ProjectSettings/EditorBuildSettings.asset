@@ -4,5 +4,17 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/_Scenes/AthenicationScene.unity
+    guid: 41f1be8152597e07b975116896b30fa7
+  - enabled: 1
+    path: Assets/_Scenes/HomeScene.unity
+    guid: 35ee41289fb70dbc2976e207cd7c2ee4
+  - enabled: 1
+    path: Assets/_Scenes/MakeTeamScene.unity
+    guid: a213befaa4d3f81968e8eac28b5d2fa6
+  - enabled: 1
+    path: Assets/_Scenes/GameScene.unity
+    guid: 9fc0d4010bbf28b4594072e72b8655ab
   m_configObjects: {}
