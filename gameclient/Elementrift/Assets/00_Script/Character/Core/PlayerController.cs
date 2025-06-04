@@ -12,9 +12,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float _jumpForce;
     [SerializeField] private bool _isGrounded;
     [SerializeField] private bool _jumpRequested;
-    [SerializeField] private float _rayLength = 1f;
+    [SerializeField] private float _rayLength = 2f;
     [SerializeField] private int _frontRayCount = 10;
-    [SerializeField] private float _frontRaySpacing = 0.8f;
+    [SerializeField] private float _frontRaySpacing =  2f;
     [SerializeField] private float _frontRayLength = 2.5f;
     [SerializeField] private Transform _playerBody;
     [SerializeField] private LayerMask _groundLayer;

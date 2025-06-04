@@ -1,5 +1,2 @@
-# Ignore Unity map assets
-gameclient/Elementrift/Assets/02_Map/
-
 # Ignore Unity Asset Store assets
 gameclient/Elementrift/Assets/05_AssetStore/
