@@ -4,6 +4,6 @@ using UnityEngine;
 
 public interface IGetHit
 {
-    public void TakeDamage(Character caster, float dmg);
+    public void TakeDamage(PlayerData caster, float dmg);
     public void Heal(float healAmount);
 }

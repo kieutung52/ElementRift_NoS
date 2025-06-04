@@ -8,6 +8,8 @@ public class PlayerData
     [SerializeField] private string _playerName;
     [SerializeField] private string _playerId;
 
+    [SerializeField] private string _characterId;
+
     public string PlayerName
     {
         get => _playerName;
@@ -18,9 +20,16 @@ public class PlayerData
         get => _playerId;
         set => _playerId = value;
     }
-    public PlayerData(string playerName, string playerId)
+
+    public string CharacterId
+    {
+        get => _characterId;
+        set => _characterId = value;
+    }
+    public PlayerData(string playerName, string playerId, string characterId)
     {
         _playerName = playerName;
         _playerId = playerId;
+        _characterId = characterId;
     }
 }

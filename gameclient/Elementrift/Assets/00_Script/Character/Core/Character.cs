@@ -22,7 +22,7 @@ public class Character : MonoBehaviour, IGetHit
     }
 
 
-    public void TakeDamage(Character caster, float dmg)
+    public void TakeDamage(PlayerData caster, float dmg)
     {
         throw new System.NotImplementedException();
     }
