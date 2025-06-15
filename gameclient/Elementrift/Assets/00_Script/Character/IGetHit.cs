@@ -6,4 +6,5 @@ public interface IGetHit
 {
     public void TakeDamage(PlayerData caster, float dmg);
     public void Heal(float healAmount);
+    // public void Attack();
 }

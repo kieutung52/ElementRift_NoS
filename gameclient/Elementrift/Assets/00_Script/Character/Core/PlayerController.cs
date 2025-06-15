@@ -14,11 +14,13 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private bool _jumpRequested;
     [SerializeField] private float _rayLength = 2f;
     [SerializeField] private int _frontRayCount = 10;
-    [SerializeField] private float _frontRaySpacing =  2f;
+    [SerializeField] private float _frontRaySpacing = 2f;
     [SerializeField] private float _frontRayLength = 2.5f;
     [SerializeField] private Transform _playerBody;
     [SerializeField] private LayerMask _groundLayer;
     [SerializeField] private float _extraGravity = 20f;
+
+    [SerializeField] private GameObject _skillManager;
 
     private IPlayerState _currentState;
     private Rigidbody _rb;
@@ -36,20 +38,23 @@ public class PlayerController : MonoBehaviour
         // this._animator = this.GetComponentInChildren<Animator>();
     }
 
-    public void Init(Vector3 position)
+    public void Init(Vector3 position, PlayerData playerData)
     {
         _playerTransform.position = position;
+        _playerData = playerData;
         _moveSpeed = this.GetComponent<Character>().GetCharacterStats()._movementSpeed;
         _jumpForce = this.GetComponent<Character>().GetCharacterStats()._jumpForce;
         _rb = this.GetComponent<Rigidbody>();
         this.changeState(new IdleState());
         this._animator = this.GetComponentInChildren<Animator>();
+        this._skillManager.GetComponent<SkillManager>().Init(_playerData);
     }
 
     void Update()
     {
         HandleInput();
         _currentState?.UpdateState(this);
+        Attack();
     }
 
     void FixedUpdate()
@@ -149,10 +154,19 @@ public class PlayerController : MonoBehaviour
         _currentState.EnterState(this);
     }
 
+    public void Attack()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            _skillManager.GetComponent<SkillManager>().ExecuteSkill();
+        }
+    }
+
     public Animator GetAnimator() => _animator;
     public bool IsGrounded() => _isGrounded;
     public Vector3 GetInputDirection() => _inputDirection;
     public Rigidbody GetRigidbody() => _rb;
     public float GetMoveSpeed() => _moveSpeed;
     public void SetMoveSpeed(float speed) => _moveSpeed = speed;
+    public PlayerData GetPlayerData() => _playerData;
 }
