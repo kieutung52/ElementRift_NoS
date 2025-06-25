@@ -20,7 +20,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private LayerMask _groundLayer;
     [SerializeField] private float _extraGravity = 20f;
 
-    [SerializeField] private GameObject _skillManager;
+    [SerializeField] private SkillManager _skillManager;
 
     private IPlayerState _currentState;
     private Rigidbody _rb;
@@ -47,14 +47,15 @@ public class PlayerController : MonoBehaviour
         _rb = this.GetComponent<Rigidbody>();
         this.changeState(new IdleState());
         this._animator = this.GetComponentInChildren<Animator>();
-        this._skillManager.GetComponent<SkillManager>().Init(_playerData);
+        this._skillManager.Init(_playerData);
     }
 
     void Update()
     {
-        HandleInput();
+        this.HandleInput();
         _currentState?.UpdateState(this);
-        Attack();
+        this.Attack();
+        this.SwitchSKill();
     }
 
     void FixedUpdate()
@@ -154,11 +155,31 @@ public class PlayerController : MonoBehaviour
         _currentState.EnterState(this);
     }
 
-    public void Attack()
+    private void Attack()
     {
         if (Input.GetMouseButtonDown(0))
         {
-            _skillManager.GetComponent<SkillManager>().ExecuteSkill();
+            _skillManager.UseSkill();
+        }
+    }
+
+    private void SwitchSKill()
+    {
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            this._skillManager.ChangeSkill(1);
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            this._skillManager.ChangeSkill(2);
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            this._skillManager.ChangeSkill(3);
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha4))
+        {
+            this._skillManager.ChangeSkill(4);
         }
     }
 
