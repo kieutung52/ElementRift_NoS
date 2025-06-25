@@ -1,53 +1,71 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
+// Using ObjectPooling to optimize performance
 public class ObjectPooling : MonoBehaviour
 {
-    private static ObjectPooling _instance;
-    public static ObjectPooling Instance => _instance;
+    // using design pattern Singleton
+    private static ObjectPooling _instant;
+    public static ObjectPooling Instant => _instant;
 
-    [SerializeField] private Dictionary<GameObject, List<GameObject>> _pool = new Dictionary<GameObject, List<GameObject>>();
+    private Dictionary<GameObject, List<GameObject>> _pools = new Dictionary<GameObject, List<GameObject>>();
 
     private void Awake()
     {
-        if (_instance == null)
+        if (_instant == null)
         {
-            _instance = this;
-            DontDestroyOnLoad(gameObject);
+            _instant = this.GetComponent<ObjectPooling>();
         }
-        else
+        else if (_instant.GetInstanceID() != this.GetComponent<ObjectPooling>().GetInstanceID())
         {
-            Destroy(gameObject);
+            Destroy(this.GetComponent<ObjectPooling>());
         }
     }
 
-    public virtual GameObject GetObj(GameObject prefab)
+
+    // Initialize all effects to optimize performance
+    public void Init(List<GameObject> prefabs)
     {
-        List<GameObject> listObj = new List<GameObject>();
-        if (_pool.ContainsKey(prefab))
-            listObj = _pool[prefab];
+        foreach (GameObject gameObjectprefabsItem in prefabs)
+        {
+            gameObjectprefabsItem.SetActive(false);
+            List<GameObject> gameObjectsprefabsList = new List<GameObject>();
+            _pools.Add(gameObjectprefabsItem, gameObjectsprefabsList);
+            gameObjectsprefabsList.Add(gameObjectprefabsItem);
+        }
+    }
+
+    public virtual GameObject GetObject(GameObject prefab)
+    {
+        List<GameObject> listObject = new List<GameObject>();
+
+        if (_pools.ContainsKey(prefab))
+        {
+            listObject = _pools[prefab];
+        }
         else
         {
-            _pool.Add(prefab, listObj);
+            _pools.Add(prefab, listObject);
         }
 
-        foreach (GameObject g in listObj)
+
+        foreach (GameObject go in listObject)
         {
-            if (g.activeSelf)
+            if (go.activeSelf)
+            {
                 continue;
-            return g;
+            }
+            return go;
         }
 
-        GameObject g2 = Instantiate(prefab, this.transform.position, Quaternion.identity);
-        listObj.Add(g2);
-
-        return g2;
+        GameObject go2 = Instantiate(prefab, this.transform.position, Quaternion.identity);
+        listObject.Add(go2);
+        return go2;
     }
 
     public virtual T GetComp<T>(T prefab) where T : MonoBehaviour
     {
-        return this.GetObj(prefab.gameObject).GetComponent<T>();
+        return this.GetObject(prefab.gameObject).GetComponent<T>();
     }
 }
