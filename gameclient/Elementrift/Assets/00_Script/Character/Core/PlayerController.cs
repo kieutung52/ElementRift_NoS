@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Data.Common;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -18,6 +19,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float _frontRayLength = 2.5f;
     [SerializeField] private Transform _playerBody;
     [SerializeField] private LayerMask _groundLayer;
+    [SerializeField] private LayerMask _itemLayer;
     [SerializeField] private float _extraGravity = 20f;
 
     [SerializeField] private SkillManager _skillManager;
@@ -28,43 +30,66 @@ public class PlayerController : MonoBehaviour
 
     public Animator _animator;
     private Vector3 _inputDirection;
+    private Character _character;
+    [SerializeField] private TextMeshPro _playerNameText;
+    [SerializeField] private bool _IsOwner = true;
+    [SerializeField] private GameObject _cameraObject;
 
+    void Awake()
+    {
+        _rb = this.GetComponent<Rigidbody>();
+        this._character = this.GetComponent<Character>();
+    }
     void Start()
     {
-        _moveSpeed = this.GetComponent<Character>().GetCharacterStats()._movementSpeed;
-        _jumpForce = this.GetComponent<Character>().GetCharacterStats()._jumpForce;
-        _rb = this.GetComponent<Rigidbody>();
+        _moveSpeed = this._character.GetCharacterStats()._movementSpeed;
+        _jumpForce = this._character.GetCharacterStats()._jumpForce;
         this.changeState(new IdleState());
-        // this._animator = this.GetComponentInChildren<Animator>();
+        _playerData = new PlayerData("Kieu Tung", "null", "null"); // test data
+
+        this._skillManager.Init(_playerData, this._character);
+        this._playerNameText.SetText(_playerData.PlayerName);
     }
 
     public void Init(Vector3 position, PlayerData playerData)
     {
         _playerTransform.position = position;
         _playerData = playerData;
-        _moveSpeed = this.GetComponent<Character>().GetCharacterStats()._movementSpeed;
-        _jumpForce = this.GetComponent<Character>().GetCharacterStats()._jumpForce;
-        _rb = this.GetComponent<Rigidbody>();
+        _moveSpeed = this._character.GetCharacterStats()._movementSpeed;
+        _jumpForce = this._character.GetCharacterStats()._jumpForce;
         this.changeState(new IdleState());
-        this._animator = this.GetComponentInChildren<Animator>();
-        this._skillManager.Init(_playerData);
+        this._skillManager.Init(_playerData, this._character);
+        this._playerNameText.SetText(_playerData.PlayerName);
+        if (!_IsOwner)
+        {
+            this._cameraObject.SetActive(false);
+        }
     }
 
     void Update()
     {
+        if (!_IsOwner) return;
         this.HandleInput();
         _currentState?.UpdateState(this);
         this.Attack();
         this.SwitchSKill();
+        this.AccessKeyRequired();
+        this.UpdateUI();
     }
 
     void FixedUpdate()
     {
+        if (!_IsOwner) return;
         CheckGround();
         ApplyMovement();
         ApplyExtraGravity();
     }
 
+    private void UpdateUI()
+    {
+        BattleUI.Instance.UpdateHealthBar(_character.GetCharacterStats()._health / _character.GetCharacterStats()._maxHealth * 100f);
+        BattleUI.Instance.UpdateManaBar(_character.GetCharacterStats()._mana / _character.GetCharacterStats()._maxMana * 100f);
+    }
     private void HandleInput()
     {
         float h = Input.GetAxisRaw(CONSTANT.GETAXIS_HORIZONTAL);
@@ -77,14 +102,6 @@ public class PlayerController : MonoBehaviour
             this.changeState(new JumpState());
         }
     }
-
-    public bool IsMoving()
-    {
-        float h = Input.GetAxis(CONSTANT.GETAXIS_HORIZONTAL);
-        float v = Input.GetAxis(CONSTANT.GETAXIS_VERTICAL);
-        return Mathf.Abs(h) > 0.1f || Mathf.Abs(v) > 0.1f;
-    }
-
 
     public void CheckGround()
     {
@@ -129,10 +146,25 @@ public class PlayerController : MonoBehaviour
     {
         if (_inputDirection.magnitude > 0.1f)
         {
-            Vector3 move = transform.TransformDirection(_inputDirection) * _moveSpeed * Time.fixedDeltaTime;
-            _rb.MovePosition(_rb.position + move);
+            Vector3 desiredMove = transform.TransformDirection(_inputDirection).normalized;
+
+            if (_isGrounded)
+            {
+                desiredMove = Vector3.ProjectOnPlane(desiredMove, _hitDown.normal).normalized;
+            }
+
+            Vector3 finalVelocity = desiredMove * _moveSpeed;
+            finalVelocity.y = _rb.velocity.y;
+
+            _rb.velocity = finalVelocity;
+        }
+        else
+        {
+            Vector3 stopVelocity = new Vector3(0, _rb.velocity.y, 0);
+            _rb.velocity = stopVelocity;
         }
     }
+
 
     private void ApplyExtraGravity()
     {
@@ -163,6 +195,28 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    private void AccessKeyRequired()
+    {
+        Collider[] collider = Physics.OverlapSphere(transform.position, 30f, _itemLayer);
+        foreach (Collider col in collider)
+        {
+            if (col.CompareTag("Key") && Input.GetKeyDown(KeyCode.F))
+            {
+                KeyItem keyItem = col.GetComponent<KeyItem>();
+                if (keyItem != null)
+                {
+                    keyItem.UseItem(this);
+                    return;
+                }
+            } else if (col.CompareTag("Gate") && Input.GetKeyDown(KeyCode.F))
+            {
+                GateManager.Instance.EnterGate(this);
+                return;
+            }
+        }
+
+    }
+
     private void SwitchSKill()
     {
         if (Input.GetKeyDown(KeyCode.Alpha1))
@@ -190,4 +244,7 @@ public class PlayerController : MonoBehaviour
     public float GetMoveSpeed() => _moveSpeed;
     public void SetMoveSpeed(float speed) => _moveSpeed = speed;
     public PlayerData GetPlayerData() => _playerData;
+
+    public bool IsPlayerAlive() => this._character.IsAlive();
+    public void SetIsOwner(bool isOwner) => _IsOwner = isOwner;
 }
