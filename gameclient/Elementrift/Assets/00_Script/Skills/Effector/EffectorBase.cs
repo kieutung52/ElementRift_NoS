@@ -30,17 +30,24 @@ public abstract class EffectorBase : MonoBehaviour
         this._Timer = _LifeTime;
         this.transform.localPosition = Position;
         this._Direction = direction;
+    }
 
+    void Update()
+    {
+        _Timer -= Time.deltaTime;
+        if (_Timer < 0)
+        {
+            this.disableEffector();
+        }
+        if (Vector3.Angle(transform.forward, _Direction) > 1f)
+        {
+            transform.rotation = Quaternion.LookRotation(_Direction);
+        }
     }
 
     void FixedUpdate()
     {
         this._Rb.velocity = _Direction * _SpeedEffector;
-        _Timer -= Time.fixedDeltaTime;
-        if (_Timer < 0)
-        {
-            this.disableEffector();
-        }
     }
 
     public PlayerData getCasterInfo()

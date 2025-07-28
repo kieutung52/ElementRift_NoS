@@ -13,8 +13,8 @@ public class LyraArcaneNovaEffect : EffectorBase
         
         foreach (Collider collider in colliders)
         {
-            _GetHit = collider.gameObject.GetComponent<IGetHit>();
-            if (_GetHit != null)
+            _GetHit = collider.GetComponentInParent<IGetHit>();
+            if ((_GetHit != null) && collider.CompareTag("Enemy"))
             {
                 _GetHit.TakeDamage(this.getCasterInfo(), this.getDamage());
             }
@@ -24,8 +24,8 @@ public class LyraArcaneNovaEffect : EffectorBase
 
     private void OnTriggerEnter(Collider other)
     {
-        _GetHit = other.GetComponent<IGetHit>();
-        if (_GetHit != null)
+        _GetHit = other.GetComponentInParent<IGetHit>();
+        if ((_GetHit != null) && other.CompareTag("Enemy"))
         {
             this.activeEffector();
         }

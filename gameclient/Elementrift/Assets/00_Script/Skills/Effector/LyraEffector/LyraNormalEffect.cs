@@ -14,8 +14,8 @@ public class LyraNormalEffect : EffectorBase
 
     private void OnTriggerEnter(Collider other)
     {
-        _GetHit = other.GetComponent<IGetHit>();
-        if (_GetHit != null)
+        _GetHit = other.GetComponentInParent<IGetHit>();
+        if ((_GetHit != null) && other.CompareTag("Enemy"))
         {
             this.activeEffector();
         }

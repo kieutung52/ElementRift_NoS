@@ -7,13 +7,13 @@ public abstract class SkillBase : MonoBehaviour
     [SerializeField] protected float _Damage;
     [SerializeField] private float _ManaCost;
     [SerializeField] private float _CoolDownTime;
-    [SerializeField] private float _AttackRange;
     [SerializeField] protected PlayerData _Caster;
     [SerializeField] protected EffectorBase _Effector;
 
     protected Vector3 _DirectionSkill;
 
     protected SkillManager _SkillManager;
+    protected Character _Character;
 
     public void Init(PlayerData caster, Vector3 direction, SkillManager skillManager)
     {
@@ -22,7 +22,7 @@ public abstract class SkillBase : MonoBehaviour
         this._SkillManager = skillManager;
     }
 
-    public abstract void activeSkill();
+    public abstract void activeSkill(float Basedamge);
 
     public PlayerData Caster
     {
@@ -33,6 +33,11 @@ public abstract class SkillBase : MonoBehaviour
     public float getCoolDownTime()
     {
         return this._CoolDownTime;
+    }
+
+    public float getManaCost()
+    {
+        return this._ManaCost;
     }
     
 

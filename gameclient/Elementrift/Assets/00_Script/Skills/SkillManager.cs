@@ -7,8 +7,9 @@ public class SkillManager : MonoBehaviour
     [SerializeField] private List<SkillBase> _skills = new List<SkillBase>(4);
     private Dictionary<SkillBase, float> _cooldowns = new Dictionary<SkillBase, float>();
     [SerializeField] private SkillBase _skillCurrent;
+    private Character _character;
 
-    public void Init(PlayerData caster)
+    public void Init(PlayerData caster, Character character)
     {
         foreach (SkillBase skill in _skills)
         {
@@ -16,6 +17,7 @@ public class SkillManager : MonoBehaviour
             this._cooldowns[skill] = 0f;
         }
         this.ChangeSkill(1);
+        this._character = character;
     }
 
     // Update is called once per frame
@@ -62,13 +64,8 @@ public class SkillManager : MonoBehaviour
             Debug.LogWarning("Skill is on cooldown: " + this._cooldowns[_skillCurrent]);
             return;
         }
-        this._skillCurrent.activeSkill();
+        this._skillCurrent.activeSkill(this._character.GetCharacterStats()._baseDamage);
+        this._character.UseMana(this._skillCurrent.getManaCost());
         _cooldowns[_skillCurrent] = this._skillCurrent.getCoolDownTime();
-    }
-
-    void OnDrawGizmosSelected()
-    {
-        Debug.LogError("position: " + this.GetComponent<SkillManager>().transform.position);
-        Debug.LogError("Local Postion" + this.GetComponent<SkillManager>().transform.localPosition);
     }
 }

@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class ArcaneNovaSkill : SkillBase
 {
-    public override void activeSkill()
+    public override void activeSkill(float Basedamge)
     {
         EffectorBase effectorPool = ObjectPooling.Instant.GetComp<EffectorBase>(_Effector);
-        effectorPool.Init(_Caster, _Damage, this._SkillManager.transform.position, this._SkillManager.transform.forward.normalized);
+        effectorPool.Init(_Caster, _Damage + Basedamge, this._SkillManager.transform.position, this._SkillManager.transform.forward.normalized);
         effectorPool.gameObject.SetActive(true);
     }
 }
