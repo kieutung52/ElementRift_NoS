@@ -28,4 +28,7 @@ public static class CONSTANT
     public static readonly string PLAYER_PARAMETER_IsJumping = "IsJumping";
     public static readonly string PLAYER_PARAMETER_IsAttacking = "IsAttacking";
     public static readonly string PLAYER_PARAMETER_IsDead = "IsDead";
+
+    public static readonly string GAME_MANAGER_TeamName_A = "TeamA";
+    public static readonly string GAME_MANAGER_TeamName_B = "TeamB";
 }
