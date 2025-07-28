@@ -40,16 +40,16 @@ public class PlayerController : MonoBehaviour
         _rb = this.GetComponent<Rigidbody>();
         this._character = this.GetComponent<Character>();
     }
-    void Start()
-    {
-        _moveSpeed = this._character.GetCharacterStats()._movementSpeed;
-        _jumpForce = this._character.GetCharacterStats()._jumpForce;
-        this.changeState(new IdleState());
-        _playerData = new PlayerData("Kieu Tung", "null", "null"); // test data
+    // void Start()
+    // {
+    //     _moveSpeed = this._character.GetCharacterStats()._movementSpeed;
+    //     _jumpForce = this._character.GetCharacterStats()._jumpForce;
+    //     this.changeState(new IdleState());
+    //     _playerData = new PlayerData("Kieu Tung", "null", "null"); // test data
 
-        this._skillManager.Init(_playerData, this._character);
-        this._playerNameText.SetText(_playerData.PlayerName);
-    }
+    //     this._skillManager.Init(_playerData, this._character);
+    //     this._playerNameText.SetText(_playerData.PlayerName);
+    // }
 
     public void Init(Vector3 position, PlayerData playerData)
     {

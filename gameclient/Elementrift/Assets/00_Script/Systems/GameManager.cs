@@ -13,7 +13,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] bool isKey1, isKey2, isKey3;
     [SerializeField] int scoreA, scoreB, ownerKeyA, ownerKeyB;
     private float _GameDuration = 600f;
-    private float _Timer = 600f; // 10 minutes
+    private float _Timer;
     private GameStats _gameStats;
 
 

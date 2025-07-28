@@ -22,9 +22,9 @@ public class GameProfile : MonoBehaviour
             _instance = this;
             DontDestroyOnLoad(gameObject);
         }
-        else
+        else if (_instance.GetInstanceID() != this.GetComponent<GameProfile>().GetInstanceID())
         {
-            Destroy(gameObject);
+            Destroy(this.GetComponent<GameProfile>());
         }
     }
 
