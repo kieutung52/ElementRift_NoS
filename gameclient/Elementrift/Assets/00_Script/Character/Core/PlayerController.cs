@@ -58,12 +58,14 @@ public class PlayerController : MonoBehaviour
         _moveSpeed = this._character.GetCharacterStats()._movementSpeed;
         _jumpForce = this._character.GetCharacterStats()._jumpForce;
         this.changeState(new IdleState());
-        this._skillManager.Init(_playerData, this._character);
         this._playerNameText.SetText(_playerData.PlayerName);
         if (!_IsOwner)
         {
             this._cameraObject.SetActive(false);
+            return;
         }
+        this._skillManager.Init(_playerData, this._character);
+
     }
 
     void Update()

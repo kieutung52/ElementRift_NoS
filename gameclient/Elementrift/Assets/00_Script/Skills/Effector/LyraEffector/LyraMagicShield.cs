@@ -13,6 +13,7 @@ public class LyraMagicShield : EffectorBase
     void OnTriggerEnter(Collider other)
     {
         EffectorBase _effector = other.GetComponent<EffectorBase>();
+        if (_effector == null) return;
         if (_effector.getDamage() > _AmountDef)
         {
             this.disableEffector();

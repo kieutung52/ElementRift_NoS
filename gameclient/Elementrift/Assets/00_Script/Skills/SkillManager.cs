@@ -11,6 +11,14 @@ public class SkillManager : MonoBehaviour
 
     public void Init(PlayerData caster, Character character)
     {
+        if (character == null)
+        {
+            Debug.LogError("chracter = null");
+        }
+        if (caster == null)
+        {
+            Debug.LogError("caster = null");
+        }
         foreach (SkillBase skill in _skills)
         {
             skill.Init(caster, this.transform.forward.normalized, this.GetComponent<SkillManager>());
