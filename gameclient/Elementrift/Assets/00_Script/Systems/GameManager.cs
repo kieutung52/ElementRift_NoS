@@ -134,6 +134,7 @@ public class GameManager : MonoBehaviour
 
     public void ResetGame()
     {
+        
         NotificationUI("Game resetting...");
 
         Debug.Log("GameManager: Destroying old characters...");
@@ -150,8 +151,6 @@ public class GameManager : MonoBehaviour
         this.isKey1 = this.isKey2 = this.isKey3 = false;
         this.ownerKeyA = 0;
         this.ownerKeyB = 0;
-        this.scoreA = 0;
-        this.scoreB = 0;
         this._Timer = _GameDuration;
         this._gameStats = GameStats.Start;
 
@@ -165,6 +164,8 @@ public class GameManager : MonoBehaviour
         Debug.Log("GameManager: Spawning new characters for reset game.");
         InitializeCharacters(this.TeamA, IsAlly(this.TeamA));
         InitializeCharacters(this.TeamB, IsAlly(this.TeamB));
+        GateManager.Instance.Init();
+        MonsterManager.Instance.Init();
         Debug.Log("GameManager: Game reset complete.");
     }
 
@@ -182,7 +183,21 @@ public class GameManager : MonoBehaviour
             }
 
             // Kiểm tra nếu tất cả các key đã được truy cập
-            if (isKey1 && isKey2 && isKey3)
+            // if (isKey1 && isKey2 && isKey3)
+            // {
+            //     Debug.Log("GameManager: All keys have been accessed. Proceeding to next stage/opening gate.");
+            //     if (GateManager.Instance != null)
+            //     {
+            //         GateManager.Instance.OpenGate(); // Yêu cầu GateManager mở cổng
+            //     }
+            //     else
+            //     {
+            //         Debug.LogWarning("GameManager: GateManager.Instance is NULL. Cannot open gate.");
+            //     }
+            // }
+
+            // Test
+            if (isKey1 || isKey2 || isKey3)
             {
                 Debug.Log("GameManager: All keys have been accessed. Proceeding to next stage/opening gate.");
                 if (GateManager.Instance != null)

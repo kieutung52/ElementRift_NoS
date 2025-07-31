@@ -208,6 +208,7 @@ public class MonsterController : MonoBehaviour, IMonster, IGetHit
         {
             GameObject loot = Instantiate(_lootItem.gameObject, this._positionItem, Quaternion.identity);
             loot.GetComponent<ItemBase>().Init(this._positionItem);
+            MonsterManager.Instance.AddGameObjKey(loot);
         }
     }
 
